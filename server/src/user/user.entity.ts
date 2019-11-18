@@ -1,9 +1,9 @@
-import {Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('users')
 export class User {
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
     @Column()
     userName: string;
@@ -13,4 +13,7 @@ export class User {
 
     @Column()
     password: string;
+
+    @Column({ default: false })
+    confirmed: boolean;
 }

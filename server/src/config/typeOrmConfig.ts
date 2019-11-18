@@ -10,4 +10,5 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
     entities: [__dirname + '/../**/*.entity{.ts,.js}'],
     synchronize: true,
     dropSchema: true,
+    subscribers: [__dirname + '/../subscribers/*.subscriber{.ts,.js}'],
 };

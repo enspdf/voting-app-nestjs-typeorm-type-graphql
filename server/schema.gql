@@ -8,14 +8,22 @@ type ErrorResponse {
   message: String!
 }
 
+"""Login Input"""
+input LoginInput {
+  email: String!
+  password: String!
+}
+
 type Mutation {
   signUp(signupInput: SignupInput!): [ErrorResponse!]
+  login(loginInput: LoginInput!): [ErrorResponse!]
 }
 
 type Query {
   hello: String!
 }
 
+"""Sign Up Input"""
 input SignupInput {
   userName: String!
   email: String!

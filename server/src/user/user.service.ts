@@ -11,6 +11,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Response, Request } from 'express';
 import { compare } from 'bcryptjs';
+import { Context } from '../types/context';
 
 @Injectable()
 export class UserService {
@@ -64,5 +65,17 @@ export class UserService {
         req.session.userId = user.id;
 
         return null;
+    }
+
+    async logout(ctx: Context) {
+        await ctx.req.session.destroy((err) => {
+            console.log(err);
+
+            return false;
+        });
+
+        await ctx.res.clearCookie('votingapp');
+
+        return true;
     }
 }

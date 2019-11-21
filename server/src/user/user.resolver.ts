@@ -24,4 +24,9 @@ export class UserResolver {
     async login(@Args('loginInput') loginInput: LoginInput, @Context() ctx: Ctx): Promise<ErrorResponse[] | null> {
         return this.userService.login(loginInput, ctx.req);
     }
+
+    @Mutation(returns => Boolean)
+    async logout(@Context() ctx: Ctx) {
+        return this.userService.logout(ctx);
+    }
 }

@@ -1,5 +1,5 @@
 import { Poll } from './poll.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 
 @Entity()
 export class PollOption {
@@ -12,7 +12,9 @@ export class PollOption {
     @Column('integer')
     votes: number;
 
+    @Column()
+    pollId: number;
+
     @ManyToOne(() => Poll, poll => poll.pollOption)
-    @JoinColumn()
     poll: Promise<Poll>;
 }

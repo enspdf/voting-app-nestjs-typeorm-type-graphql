@@ -10,8 +10,10 @@ export class Poll {
     @Column()
     name: string;
 
+    @Column()
+    userId: string;
+
     @ManyToOne(() => User, user => user.poll)
-    @JoinColumn()
     user: Promise<User>;
 
     @OneToMany(() => PollOption, pollOption => pollOption.poll)

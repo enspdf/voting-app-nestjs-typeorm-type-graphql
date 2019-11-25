@@ -54,6 +54,31 @@ export class PollService {
     }
 
     async poll(id: number): Promise<Poll> {
-        return await this.pollRepo.findOne({ where: { id }, relations: ['pollOption'] });
+        return await this.pollRepo.findOne({
+            where: { id },
+            relations: ['pollOption'],
+        });
+    }
+
+    async allPolls(take: number, skip: number): Promise<Poll[]> {
+        return await this.pollRepo
+            .createQueryBuilder('poll')
+            .innerJoinAndSelect('poll.pollOption', 'pollOption')
+            .orderBy('poll.name', 'ASC')
+            .take(take)
+            .skip(skip)
+            .getMany();
+    }
+
+    async deletePoll(ctx: Ctx, id: number): Promise<Boolean> {
+        try {
+            await this.pollRepo.delete({ id });
+            const ip = ctx.req.header('x-forwarded-for') || ctx.req.connection.remoteAddress;
+            await redis.srem(`${POLL_OPTION_ID_PREFIX}${id}`);
+        } catch (err) {
+            return false;
+        }
+
+        return true;
     }
 }

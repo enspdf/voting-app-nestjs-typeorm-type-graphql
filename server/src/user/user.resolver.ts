@@ -10,11 +10,6 @@ import { SignupInput } from './input/user.signupInput';
 export class UserResolver {
     constructor(private readonly userService: UserService) { }
 
-    @Query(returns => String)
-    async hello() {
-        return 'Hello World';
-    }
-
     @Mutation(returns => [ErrorResponse], { nullable: true })
     async signUp(@Args('signupInput') signupInput: SignupInput): Promise<ErrorResponse[] | null> {
         return this.userService.signup(signupInput);

@@ -1,3 +1,4 @@
+import { AllPollsArgs } from './args/allPollsArgs.args';
 import { Poll } from './poll.entity';
 import { PollService } from './poll.service';
 import { CreatePollArgs } from './args/createPollArgs.args';
@@ -25,5 +26,15 @@ export class PollResolver {
     @Query(returns => Poll)
     async poll(@Args('id') id: number): Promise<Poll> {
         return this.pollService.poll(id);
+    }
+
+    @Query(returns => [Poll])
+    async allPolls(@Args() { take, skip }: AllPollsArgs): Promise<Poll[]> {
+        return this.pollService.allPolls(take, skip);
+    }
+
+    @Mutation(returns => Boolean)
+    async deletePoll(@Context() ctx: Ctx, @Args('id') id: number): Promise<Boolean> {
+        return this.pollService.deletePoll(ctx, id);
     }
 }

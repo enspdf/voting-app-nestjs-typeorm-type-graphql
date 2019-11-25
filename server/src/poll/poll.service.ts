@@ -81,4 +81,8 @@ export class PollService {
 
         return true;
     }
+
+    async myPoll(userId: string): Promise<Poll[]> {
+        return await this.pollRepo.find({ where: {userId} });
+    }
 }

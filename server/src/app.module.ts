@@ -1,3 +1,4 @@
+import { pollOptionLoader } from './loaders/pollOptionLoader';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -12,7 +13,7 @@ import { PollModule } from './poll/poll.module';
     TypeOrmModule.forRoot(typeOrmConfig),
     GraphQLModule.forRoot({
       autoSchemaFile: 'schema.gql',
-      context: ({ req, res }) => ({ req, res }),
+      context: ({ req, res }) => ({ req, res, pollOptionLoader: pollOptionLoader }),
     }),
     UserModule,
     PollModule,
